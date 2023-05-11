@@ -1,7 +1,7 @@
 import { MantineModal } from "@/utils/modals/types";
 import ModalLayout from "./ModalLayout";
 
-interface HelloWorldModalProps {
+export interface HelloWorldModalProps {
   name: string;
 }
 

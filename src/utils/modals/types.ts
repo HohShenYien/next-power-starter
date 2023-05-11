@@ -1,3 +1,4 @@
+import { HelloWorldModalProps } from "@/components/modals/HelloWorldModal";
 import { ContextModalProps, modals } from "@mantine/modals";
 import { ReactElement } from "react";
 
@@ -7,9 +8,7 @@ export const secondModal = "Second Modal";
 export type ModalType = typeof helloWorldModal | typeof secondModal;
 
 export type ModalInnerProps = {
-  [key in typeof helloWorldModal]: {
-    name: string;
-  };
+  [key in typeof helloWorldModal]: HelloWorldModalProps;
 } & {
   [key in typeof secondModal]: {};
 };
