@@ -1,5 +1,9 @@
 # Next Power Starter
 
+<center>
+   <img src="https://github.com/HohShenYien/next-power-starter/assets/55322546/99bc59e7-e8ee-45dd-870b-3692a995064c" alt="Next Power Starter">
+</center>
+
 ## 🧐 About
 
 Next Power Starter is an **optionated** Next.js starter template with flexibility & ease of use in mind.
