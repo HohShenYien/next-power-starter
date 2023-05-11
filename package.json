@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "next-power-starter",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,10 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/server": "^11.11.0",
+    "@mantine/core": "^6.0.10",
+    "@mantine/dates": "^6.0.10",
+    "@mantine/form": "^6.0.10",
+    "@mantine/hooks": "^6.0.10",
+    "@mantine/modals": "^6.0.10",
+    "@mantine/next": "^6.0.10",
+    "@mantine/notifications": "^6.0.10",
+    "@tanstack/react-query": "^4.29.5",
     "@types/node": "20.1.2",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
+    "dayjs": "^1.11.7",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
     "next": "13.4.1",
@@ -20,6 +31,12 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "zustand": "^4.3.8"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "sass": "^1.62.1"
   }
 }
