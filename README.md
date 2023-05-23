@@ -31,7 +31,7 @@ Next Power Starter includes the following features out-of-the-box:
 1. You can either clone this repo, or run the following command to use the template
 
    ```bash
-   yarn create next-app [project-name] -e https://github.com/HohShenYien/next-power-starter
+   yarn create-next-app [project-name] -e https://github.com/HohShenYien/next-power-starter
    # or
    npx create-next-app [project-name] -e https://github.com/HohShenYien/next-power-starter
    ```
