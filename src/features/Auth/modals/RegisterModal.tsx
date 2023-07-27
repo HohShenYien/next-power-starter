@@ -49,7 +49,10 @@ const RegisterModal: MantineModal<RegisterModalProps> = () => {
           <Image alt="Mountains" src="/random-image.jpg" fill />
         </div>
         <div className="col-span-6 space-y-4 px-6 py-8">
-          <h2 className="text-2xl font-semibold">Join Caringly</h2>
+          <div>
+            <h2 className="text-2xl font-semibold">Register</h2>
+            <div>I did not implement any API yet</div>
+          </div>
           <form className="space-y-2" onSubmit={form.onSubmit(submitForm)}>
             <TextInput
               label="Username"

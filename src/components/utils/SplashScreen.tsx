@@ -4,9 +4,14 @@ const SplashScreen = () => {
   return (
     <div className="relative flex h-screen w-screen flex-col items-center justify-center">
       <div>
-        <Image src="/next.svg" alt="InstaNext" height={120} width={120} />
+        <Image
+          src="/next.svg"
+          alt="Next Power Starter"
+          height={120}
+          width={120}
+        />
         <div className="mt-2 text-center text-2xl font-medium text-indigo-600">
-          Caringly
+          Next Power Starter
         </div>
       </div>
       <div className="absolute bottom-4 text-center">

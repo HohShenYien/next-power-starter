@@ -41,7 +41,7 @@ const LoginModal: MantineModal<LoginModalProps> = () => {
     <ModalLayout padding={false}>
       <div className="grid h-[500px] grid-cols-12">
         <div className="col-span-6 space-y-4 px-6 py-8">
-          <h2 className="text-2xl font-semibold">Continue to Caringly</h2>
+          <h2 className="text-2xl font-semibold">Login</h2>
           <form className="space-y-2" onSubmit={form.onSubmit(submitForm)}>
             <TextInput
               label="Email"
