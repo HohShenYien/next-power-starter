@@ -66,13 +66,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ### Env
 
-The .env file has two variables that you might want to update
+The .env file has one variable that you might want to update
 
 ```env
 # The base API URL to make any request
 NEXT_PUBLIC_API_URL=/api
-# For cookie
-NEXT_PUBLIC_DOMAIN=localhost
 ```
 
 ### Authentication

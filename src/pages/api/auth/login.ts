@@ -9,7 +9,6 @@ const authSchema = z.object({
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const data = authSchema.parse(JSON.parse(req.body));
-    console.log(data);
     if (data) {
       if (data.email === "hohshenyien@gmail.com" && data.password === "asdf") {
         res.status(200).json({ auth_token: "This is a JWT auth token" });

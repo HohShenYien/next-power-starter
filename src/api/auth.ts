@@ -1,12 +1,11 @@
 import { apiClient } from "@/features/Auth/AxiosProvider";
-import { deleteCookie } from "cookies-next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { User } from "@/features/Auth/types";
 import { AxiosError } from "axios";
 import useAuthToken from "@/features/Auth/hooks/useAuthToken";
 import { RegisterType } from "@/features/Auth/modals/RegisterModal";
 import { AuthType } from "@/features/Auth/modals/LoginModal";
-import { login } from "@/features/Auth/utils";
+import { deleteCookie, login } from "@/features/Auth/utils";
 import { modals } from "@mantine/modals";
 import { useRouter } from "next/router";
 import { authRedirectPath, loginAfterRegister } from "@/configs/auth.config";
@@ -71,10 +70,7 @@ export const useUserQuery = () => {
       } catch (exception) {
         if (exception instanceof AxiosError) {
           if (exception.response?.status === 401) {
-            deleteCookie("authToken", {
-              path: "/",
-              domain: process.env.NEXT_PUBLIC_DOMAIN,
-            });
+            deleteCookie();
           }
         }
       }

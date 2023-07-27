@@ -18,8 +18,6 @@ const useSession = () => {
   const authToken = useAuthToken();
 
   const session: Session = useMemo(() => {
-    console.log("AUTH TOKEN Changed");
-    console.log(authToken);
     if (!authToken) {
       return { status: "unauthenticated", user: undefined };
     }
