@@ -1,5 +1,4 @@
-"use client";
-
+import { AxiosProvider } from "@/features/Auth/AxiosProvider";
 import { modals } from "@/utils/modals/modals";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
@@ -13,18 +12,20 @@ const Provider = ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <QueryClientProvider client={client}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme: "light",
-        }}
-      >
-        <ModalsProvider modals={modals}>{children}</ModalsProvider>
-        <Notifications />
-      </MantineProvider>
-    </QueryClientProvider>
+    <AxiosProvider>
+      <QueryClientProvider client={client}>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "light",
+          }}
+        >
+          <ModalsProvider modals={modals}>{children}</ModalsProvider>
+          <Notifications />
+        </MantineProvider>
+      </QueryClientProvider>
+    </AxiosProvider>
   );
 };
 

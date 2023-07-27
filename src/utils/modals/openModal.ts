@@ -8,13 +8,18 @@ import { Box } from "@mantine/core";
 interface OpenModalProps<T extends ModalType> {
   type: T;
   innerProps: ModalInnerProps[T];
+  closeAll?: boolean;
 }
 
 function openModal<T extends ModalType>({
   type,
   innerProps,
+  closeAll = false,
 }: OpenModalProps<T>) {
   const modalProperties = allModals[type].properties;
+  if (closeAll) {
+    modals.closeAll();
+  }
   modals.openContextModal({
     padding: 0,
     modal: type,

@@ -1,5 +1,3 @@
-"use client";
-
 import { MantineModal } from "@/utils/modals/types";
 import ModalLayout from "./ModalLayout";
 

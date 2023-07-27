@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Button as MantineButton,
   clsx,
@@ -14,7 +12,7 @@ const Button = ({ children, variant = "filled", ...props }: ButtonProps) => {
   return (
     <MantineButton
       {...props}
-      className={clsx(props.className, "rounded-full transition-all", {
+      className={clsx("rounded-md px-3 py-2 transition-all", props.className, {
         "bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700":
           variant == "filled",
         "!bg-transparent text-indigo-500 hover:border-indigo-600 hover:text-indigo-600 active:text-indigo-700":
@@ -25,7 +23,7 @@ const Button = ({ children, variant = "filled", ...props }: ButtonProps) => {
       variant={variant}
       classNames={{ root: "!h-[unset] py-1" }}
     >
-      {children}
+      <span className="py-0.5 ">{children}</span>
     </MantineButton>
   );
 };
