@@ -1,16 +1,16 @@
 # Next Power Starter
 
 <center>
-   <img src="https://github.com/HohShenYien/next-power-starter/assets/55322546/99bc59e7-e8ee-45dd-870b-3692a995064c" alt="Next Power Starter">
+   <img src="https://github.com/HohShenYien/next-power-starter/assets/55322546/e21721f5-bb92-49e0-9d2d-23dc7f98f30d" alt="Next Power Starter">
 </center>
 
 ## 🧐 About
 
 Next Power Starter is an **optionated** Next.js starter template with flexibility & ease of use in mind.
 
-I always find myself needing to setup the project in the same way, and often times, reusing the same structures and types. Hence, I've put together the common configurations into this starter template.
+I always find myself needing to setup the project in the same way, and oftentimes, reusing the same structures and types. Hence, I've put together the common configurations into this starter template.
 
-PS: It uses Next.js 13's [App Router](https://nextjs.org/docs/app).
+PS: Due to several breaking bugs in App Router, I have reverted back to **Page Router** for now
 
 ## ⚡ Features
 
@@ -64,24 +64,9 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ### Modal
 
-#### Vanilla Modal
+To use Mantine's modal, there are two choices here. You can either use [vanilla modal](https://mantine.dev/core/modal/) with the standard `onClose` and `open` disclosures, or [Modal Manager](https://mantine.dev/others/modals/) implemented with a global context manager that is much simpler. 
 
-To use Mantine's modal, there are two choices here. You can either use [vanilla modal](https://mantine.dev/core/modal/) with the standard `onClose` and `open` disclosures.
-
-#### Modal Manager
-
-Alternatively, you can use [Modal Manager](https://mantine.dev/others/modals/) implemented with a global context manager that is much simpler. To open a modal, you can simply call
-
-```ts
-openModal({
-  type: "<Modal Name>",
-  innerProps: {
-    // props go here
-  },
-});
-```
-
-This template has implemented a **helper** for modal manager. To use it, you'll have to add the modal into `/src/utils/modals/types.ts`
+This template has implemented a **helper** for modal manager. To use it, you'll have to add the modal name, and prop types into `/src/utils/modals/types.ts`
 
 ```ts
 // This is the modal names, constants to identify the modal
@@ -99,6 +84,29 @@ export type ModalInnerProps = {
   [key in typeof secondModal]: {};
 };
 //...
+```
+
+You will also need to map the modal name to the modal component in `src/utils/modals/modals.ts`
+
+```ts
+// mapping modal name to modal Component
+export const modals: Record<ModalType, MantineModal<any>> = {
+  [helloWorldModal]: HelloWorldModal,
+  [secondModal]: SecondModal,
+  [loginModal]: LoginModal,
+  [registerModal]: RegisterModal,
+  [modalNameImported]: ModalComponentCreated
+};
+```
+
+
+```ts
+openModal({
+  type: "<Modal Name>",
+  innerProps: {
+    // props go here
+  },
+});
 ```
 
 ### Zustand Store
