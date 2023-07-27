@@ -4,6 +4,8 @@
    <img src="https://github.com/HohShenYien/next-power-starter/assets/55322546/e21721f5-bb92-49e0-9d2d-23dc7f98f30d" alt="Next Power Starter">
 </center>
 
+<!-- toc -->
+
 ## 🧐 About
 
 Next Power Starter is an **optionated** Next.js starter template with flexibility & ease of use in mind.
@@ -14,7 +16,7 @@ PS: Due to several breaking bugs in App Router, I have reverted back to **Page R
 
 ## ⚡ Features
 
-Next Power Starter includes the following features out-of-the-box:
+Next Power Starter includes the following features out of the box:
 
 - [Mantine](https://mantine.dev/): A React UI library which supports _almost_ all components you can think of. It also provides dark-mode support and utility hooks that I often find handy.
 
@@ -62,11 +64,117 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## Usage
 
+### Env
+
+The .env file has two variables that you might want to update
+
+```env
+# The base API URL to make any request
+NEXT_PUBLIC_API_URL=/api
+# For cookie
+NEXT_PUBLIC_DOMAIN=localhost
+```
+
+### Authentication
+
+Currently, **authentication API** routes are in `src/api/auth.ts` (which you should customize), and stored in Cookies (key is authToken). You can find everything related to authentication in `src/features/Auth` folder.
+
+#### Default API routes
+
+As defined in `src/api/auth.ts`, the following routes are created by default, but you should update them to match your needs
+
+```
+/auth/login => POST Login route, accept
+  {
+    email: string,
+    password: string
+  }
+returns {auth_token: string}
+```
+
+```
+/auth/me => Get current user details
+
+returns {
+  email: string,
+  username: string
+  }
+```
+
+#### Axios
+
+This project uses Axios where some interceptors have already been implemented in `src/features/Auth/AxiosProvider.tsx`. This includes basic error handling and most importantly, Authentication header will be set from the cookies.
+
+```ts
+...
+    const reqInterceptor = apiClient.interceptors.request.use((config) => {
+      const authToken = getCookie("authToken");
+      if (authToken) {
+        config.headers.Authorization = `bearer ${authToken}`;
+      }
+      return config;
+    });
+...
+```
+
+#### JWT & Cookies
+
+The JWT will be stored in cookies, using `cookies-next` library to manage. If you want to access the cookie, you can use `src/features/Auth/hooks/useAuthToken.ts` hook.
+
+#### Public & non-Public pages
+
+Instead of router path pattern, this project uses a less conventional `page.isPublic` component attribute. By default, every page is **public**, so to make authentication compulsory for the page, you set the `isPublic` attribute to false.
+
+For example,
+
+```tsx
+import { NextPageWithLayout } from "@/pages/_app";
+
+const ProtectedPage: NextPageWithLayout = () => {
+  ...
+}
+
+// This is the key line
+ProtectedPage.isPublic = false;
+
+export default ProtectedPage;
+```
+
+#### useSession
+
+`src/features/Auth/hooks/useSession.ts` is a hook for you to quickly get current user's status as well as information if it's authenticated.
+
+```ts
+type Session = {
+  user: undefined | User; // undefined if it's unauthenticated or loading
+  status: "loading" | "unauthenticated" | "authenticated"
+}
+```
+
+#### Auth configs
+
+Currently, there are a few default configs defined in `src/configs/auth.config.ts`
+
+```ts
+// Where to redirect the users after successfully login
+export const authRedirectPath = "/protected";
+// If true, the user will be directly authenticated after registration instead of requiring a separate login, default is false
+export const loginAfterRegister = false;
+```
+
+### useQuery
+
+The recommended location to keep all the API services is in `src/api/`. By keeping all the queries in the same folder, the queries will be more centralized and you'll less likely get lost in maintaing the query keys. It's also more reusable.
+
+You can refer to the [useQuery documentation](https://tanstack.com/query/) for more details.
+
 ### Modal
 
 To use Mantine's modal, there are two choices here. You can either use [vanilla modal](https://mantine.dev/core/modal/) with the standard `onClose` and `open` disclosures, or [Modal Manager](https://mantine.dev/others/modals/) implemented with a global context manager that is much simpler. 
 
-This template has implemented a **helper** for modal manager. To use it, you'll have to add the modal name, and prop types into `/src/utils/modals/types.ts`
+This template has implemented a **helper** for modal manager. It manages
+
+To use it, you'll have to add the modal name, and prop types into `/src/utils/modals/types.ts`
 
 ```ts
 // This is the modal names, constants to identify the modal
@@ -133,10 +241,9 @@ To learn more about the technologies used, refer to their respective documentati
 ## 🚩 TODO
 
 - [ ] Improve documentation
-- [ ] Include a top header navbar
-- [ ] Authentication Management using Cookies
+- [ ] Add more 
 - [ ] 404 & 500 page
-- [ ] Option to use JWT for authentication
+- [ ] Page headers
 
 ## Deploy on Vercel
 
