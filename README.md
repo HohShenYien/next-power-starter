@@ -241,6 +241,7 @@ To learn more about the technologies used, refer to their respective documentati
 - [ ] Improve documentation
 - [ ] Add more 
 - [ ] 404 & 500 page
+- [ ] Use http-only cookies
 - [ ] Page headers
 
 ## Deploy on Vercel
