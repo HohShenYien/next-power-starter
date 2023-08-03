@@ -6,6 +6,27 @@
 
 <!-- toc -->
 
+- [🧐 About](#%F0%9F%A7%90-about)
+- [⚡ Features](#%E2%9A%A1-features)
+- [🛠 Getting Started](#%F0%9F%9B%A0-getting-started)
+- [Usage](#usage)
+  * [Env](#env)
+  * [Authentication](#authentication)
+    + [Default API routes](#default-api-routes)
+    + [Axios](#axios)
+    + [JWT & Cookies](#jwt--cookies)
+    + [Public & non-Public pages](#public--non-public-pages)
+    + [useSession](#usesession)
+    + [Auth configs](#auth-configs)
+  * [useQuery](#usequery)
+  * [Modal](#modal)
+  * [Zustand Store](#zustand-store)
+- [🧾 Learn More](#%F0%9F%A7%BE-learn-more)
+- [🚩 TODO](#%F0%9F%9A%A9-todo)
+- [Deploy on Vercel](#deploy-on-vercel)
+
+<!-- tocstop -->
+
 ## 🧐 About
 
 Next Power Starter is an **optionated** Next.js starter template with flexibility & ease of use in mind.
