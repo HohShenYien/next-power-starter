@@ -8,13 +8,14 @@ import { loginModal, registerModal } from "@/utils/modals/types";
 import { useRouter } from "next/router";
 import useSession from "@/features/Auth/hooks/useSession";
 import { authRedirectPath } from "@/configs/auth.config";
-import { useLogout } from "@/features/Auth/utils";
+import { useLogoutMutation } from "@/features/Auth/queries";
 
 const Navbar = () => {
   const navStyle = useNavStyles();
   const router = useRouter();
+  const { isLoading, mutate: logout } = useLogoutMutation();
+
   const { status } = useSession();
-  const logout = useLogout();
   const authAction = (modal: typeof loginModal | typeof registerModal) => {
     if (status === "authenticated") {
       router.push(authRedirectPath);
@@ -43,14 +44,15 @@ const Navbar = () => {
           {status === "authenticated" ? (
             <>
               <Link href="/protected">
-                <Button variant="subtle" className="!py-1 text-lg">
+                <Button variant="subtle" color="indigo" size="lg">
                   Protected Page
                 </Button>
               </Link>
               <Button
                 variant="subtle"
-                className="!py-1 text-lg"
-                onClick={logout}
+                size="lg"
+                onClick={() => logout()}
+                loading={isLoading}
               >
                 Logout
               </Button>
@@ -59,7 +61,7 @@ const Navbar = () => {
             <>
               <Button
                 variant="subtle"
-                className="!py-1 text-lg"
+                size="lg"
                 onClick={() => {
                   authAction(loginModal);
                 }}
@@ -67,7 +69,7 @@ const Navbar = () => {
                 Sign in
               </Button>
               <Button
-                className="!py-1 text-lg"
+                size="lg"
                 onClick={() => {
                   authAction(registerModal);
                 }}

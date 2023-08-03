@@ -1,7 +1,6 @@
-import { useUserQuery } from "@/api/auth";
 import { useMemo } from "react";
 import { User } from "../types";
-import useAuthToken from "./useAuthToken";
+import { useUserQuery } from "../queries";
 
 type Session =
   | {
@@ -14,22 +13,23 @@ type Session =
     };
 
 const useSession = () => {
-  const { data, isError } = useUserQuery();
-  const authToken = useAuthToken();
+  const { data, isError, isSuccess, isLoading } = useUserQuery();
 
   const session: Session = useMemo(() => {
-    if (!authToken) {
-      return { status: "unauthenticated", user: undefined };
-    }
-    if (data) {
-      return { status: "authenticated", user: data };
+    if (isSuccess && data) {
+      return {
+        status: "authenticated",
+        user: data,
+      };
     }
     if (isError) {
       return { status: "unauthenticated", user: undefined };
     }
-
-    return { status: "loading", user: undefined };
-  }, [data, isError, authToken]);
+    if (isLoading) {
+      return { status: "loading", user: undefined };
+    }
+    return { status: "unauthenticated", user: undefined };
+  }, [data, isError, isSuccess, isLoading]);
 
   return session;
 };

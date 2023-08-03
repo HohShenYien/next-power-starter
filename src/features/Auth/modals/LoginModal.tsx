@@ -1,4 +1,3 @@
-import { useLoginMutation } from "@/api/auth";
 import Button from "@/components/buttons/Button";
 import ModalLayout from "@/components/modals/ModalLayout";
 import openModal from "@/utils/modals/openModal";
@@ -8,6 +7,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import Image from "next/image";
 import { z } from "zod";
+import { useLoginMutation } from "../queries";
 
 export interface LoginModalProps {}
 
@@ -57,11 +57,11 @@ const LoginModal: MantineModal<LoginModalProps> = () => {
 
             <Button
               fullWidth
-              className="!mt-5 py-1"
+              className="!mt-5"
               type="submit"
               loading={mutation.isLoading}
             >
-              Log in
+              Sign In
             </Button>
           </form>
           <div className="!mt-6 text-center text-sm">

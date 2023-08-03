@@ -3,12 +3,12 @@ import Image from "next/image";
 const SplashScreen = () => {
   return (
     <div className="relative flex h-screen w-screen flex-col items-center justify-center">
-      <div>
+      <div className="space-y-4">
         <Image
           src="/next.svg"
           alt="Next Power Starter"
-          height={120}
-          width={120}
+          height={240}
+          width={240}
         />
         <div className="mt-2 text-center text-2xl font-medium text-indigo-600">
           Next Power Starter

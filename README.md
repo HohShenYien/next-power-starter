@@ -126,9 +126,9 @@ Instead of router path pattern, this project uses a less conventional `page.isPu
 For example,
 
 ```tsx
-import { NextPageWithLayout } from "@/pages/_app";
+import { NextPageWithAttributes } from "@/pages/_app";
 
-const ProtectedPage: NextPageWithLayout = () => {
+const ProtectedPage: NextPageWithAttributes = () => {
   ...
 }
 

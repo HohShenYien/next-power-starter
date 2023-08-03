@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./NiceLink.module.scss";
 import Link from "next/link";
 
-interface NiceLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+type NiceLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   children?: React.ReactNode;
   href: string;
-}
+};
 
 const NiceLink = ({ children, href, ...props }: NiceLinkProps) => {
   return (

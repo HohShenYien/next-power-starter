@@ -1,4 +1,5 @@
 import { AxiosProvider } from "@/features/Auth/AxiosProvider";
+import theme from "@/styles/MantineTheme";
 import { modals } from "@/utils/modals/modals";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
@@ -14,13 +15,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
   return (
     <AxiosProvider>
       <QueryClientProvider client={client}>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme: "light",
-          }}
-        >
+        <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
           <ModalsProvider modals={modals}>{children}</ModalsProvider>
           <Notifications />
         </MantineProvider>
