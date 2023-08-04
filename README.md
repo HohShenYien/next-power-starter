@@ -1,30 +1,32 @@
-# Next Power Starter
+<h1>Next Power Starter</h1>
 
 <center>
    <img src="https://github.com/HohShenYien/next-power-starter/assets/55322546/e21721f5-bb92-49e0-9d2d-23dc7f98f30d" alt="Next Power Starter">
 </center>
 
 <!-- toc -->
+<h2>Table of Contents</h2>
 
-- [Next Power Starter](#next-power-starter)
-  - [🧐 About](#-about)
-  - [⚡ Features](#-features)
-  - [🛠 Getting Started](#-getting-started)
-  - [Usage](#usage)
-    - [Env](#env)
-    - [Authentication](#authentication)
-      - [Default API routes](#default-api-routes)
-      - [Axios](#axios)
-      - [JWT \& Cookies](#jwt--cookies)
-      - [Public \& non-Public pages](#public--non-public-pages)
-      - [useSession](#usesession)
-      - [Auth configs](#auth-configs)
-    - [useQuery](#usequery)
-    - [Modal](#modal)
-    - [Zustand Store](#zustand-store)
-  - [🧾 Learn More](#-learn-more)
-  - [🚩 TODO](#-todo)
-  - [Deploy on Vercel](#deploy-on-vercel)
+- [🧐 About](#-about)
+- [⚡ Features](#-features)
+- [🛠 Getting Started](#-getting-started)
+- [🚩 Usage](#-usage)
+  - [Recommended File Structure](#recommended-file-structure)
+  - [Env](#env)
+  - [Authentication](#authentication)
+    - [Default API routes](#default-api-routes)
+    - [Axios](#axios)
+    - [Public \& non-Public pages](#public--non-public-pages)
+    - [useSession](#usesession)
+    - [Auth configs](#auth-configs)
+  - [useQuery](#usequery)
+  - [Modal](#modal)
+  - [Zustand Store](#zustand-store)
+  - [Theming](#theming)
+- [📚 Library](#-library)
+- [🧾 Learn More](#-learn-more)
+- [🚩 TODO](#-todo)
+- [🚀 Deploy on Vercel](#-deploy-on-vercel)
 
 <!-- tocstop -->
 
@@ -38,17 +40,12 @@ PS: Due to several breaking bugs in App Router, I have reverted back to **Page R
 
 ## ⚡ Features
 
-Next Power Starter includes the following features out of the box:
-
-- [Mantine](https://mantine.dev/): A React UI library which supports _almost_ all components you can think of. It also provides dark-mode support and utility hooks that I often find handy.
-
-- [Tailwind CSS](https://tailwindcss.com/): Mantine sometimes lacks the granularity in designing the styles. Tailwind comes naturally as the optimal choice to fill in the gap.
-
-- [useQuery](https://tanstack.com/query/): No more 🙅‍♂️ `fetching` in `useEffect`. Also provides caching and various other powerful features like refetch, loading state, etc.
-
-- [Zustand](https://github.com/pmndrs/zustand): A small but powerful state management library so that we don't need to be bothered about Redux anymore.
-
-- [TypeScript](https://www.typescriptlang.org/): This project is fully typed.
+- **💃 Zero Setup**: After installation, you need 0 setup to begin using it, check out the [📚 Library](#-library) section to see what have been added.
+- **🧑‍🏭 Extensible and Configurable**: Missing something? Easily add any library without needing to fear that it breaks.
+- **🔏 Client-side Authentication**: Fully baked client side authentication with public and authenticated pages, sprinkle more logic if you need.
+- **👾 UI Components**: [Mantine](https://mantine.dev) & [Tailwind](https://tailwindcss.com/) out of the box with more than enough components and styles ready for you.
+- **🗄️ File Structure**: Stop worrying about a messy file structure with this starter.
+- **Fully Typed**
 
 ## 🛠 Getting Started
 
@@ -82,9 +79,23 @@ Next Power Starter includes the following features out of the box:
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/pages/index.tsx`. The page auto-updates as you edit the file.
 
-## Usage
+## 🚩 Usage
+
+### Recommended File Structure
+
+```
+-src
+  - components: All the general components
+  - configs: Constant configurations that do not need to be kept in .env
+  - features: Groups of related components for specific features
+  - layouts: Layout Component
+  - pages: Page Components & Routes
+  - stores: Zustand stores
+  - styles: Themes & styles files
+  - utils: Files that don't see to belong elsewhere
+```
 
 ### Env
 
@@ -92,16 +103,20 @@ The .env file has one variable that you might want to update
 
 ```env
 # The base API URL to make any request
-NEXT_PUBLIC_API_URL=/api
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 ### Authentication
 
-Currently, **authentication API** routes are in `src/api/auth.ts` (which you should customize), and stored in Cookies (key is authToken). You can find everything related to authentication in `src/features/Auth` folder.
+Currently, **authentication API** routes are in `src/features/Auth/queries.ts` (which you should customize), and relies on **http-only** cookie using server. You can find everything related to authentication in `src/features/Auth` folder.
+
+For more information about the Authentication structure, check out my [article](https://blogs.shenyien.cyou/client-side-authentication-in-nextjs-using-cookies).
 
 #### Default API routes
 
-As defined in `src/api/auth.ts`, the following routes are created by default, but you should update them to match your needs
+As defined in `src/features/Auth/queries.ts`, the following routes are created by default, but you should update them to match your needs.
+
+The `login` and `logout` routes implement **http-only** cookie setting
 
 ```
 /auth/login => POST Login route, accept
@@ -109,7 +124,7 @@ As defined in `src/api/auth.ts`, the following routes are created by default, bu
     email: string,
     password: string
   }
-returns {auth_token: string}
+returns {message: string}
 ```
 
 ```
@@ -121,9 +136,15 @@ returns {
   }
 ```
 
+```
+/auth/logout => Logout the current user
+
+returns {message: string}
+```
+
 #### Axios
 
-This project uses Axios where some interceptors have already been implemented in `src/features/Auth/AxiosProvider.tsx`. This includes basic error handling and most importantly, Authentication header will be set from the cookies.
+This project uses Axios where some interceptors have already been implemented in `src/features/Auth/AxiosProvider.tsx`. This includes basic error handling and configures the `base path` for requests.
 
 ```ts
 ...
@@ -136,10 +157,6 @@ This project uses Axios where some interceptors have already been implemented in
     });
 ...
 ```
-
-#### JWT & Cookies
-
-The JWT will be stored in cookies, using `cookies-next` library to manage. If you want to access the cookie, you can use `src/features/Auth/hooks/useAuthToken.ts` hook.
 
 #### Public & non-Public pages
 
@@ -184,9 +201,11 @@ export const loginAfterRegister = false;
 
 ### useQuery
 
-The recommended location to keep all the API services is in `src/api/`. By keeping all the queries in the same folder, the queries will be more centralized and you'll less likely get lost in maintaing the query keys. It's also more reusable.
+The recommended location to keep all the API services is in `src/features/.../queries.ts`. 
 
 You can refer to the [useQuery documentation](https://tanstack.com/query/) for more details.
+
+Learn more about the good `use-query` patterns in this [blog series](https://tkdodo.eu/blog/effective-react-query-keys).
 
 ### Modal
 
@@ -254,19 +273,37 @@ const { bears, increase } = useStore(
 };
 ```
 
+### Theming
+
+This starter has filled up all Tailwind colors in Mantine's theme.
+
+To customize Mantine's component theme globally, edit `src/styles/MantineTheme.ts`.
+
+## 📚 Library
+
+Next Power Starter includes the following packages out of the box:
+
+- [Mantine](https://mantine.dev/): A React **Component library** which supports _almost_ all components you can think of. It also provides dark-mode support and utility hooks that I often find handy.
+
+- [Tailwind CSS](https://tailwindcss.com/): Mantine sometimes lacks the granularity in designing the styles. Tailwind comes naturally as the optimal choice to fill in the gap.
+
+- [useQuery](https://tanstack.com/query/): No more 🙅‍♂️ `fetching` in `useEffect`. Also provides caching and various other powerful features like refetch, loading state, etc.
+
+- [Zustand](https://github.com/pmndrs/zustand): A small but powerful state management library so that we don't need to be bothered about Redux anymore.
+
+- [TypeScript](https://www.typescriptlang.org/): This project is fully typed.
+
+- [Zod](https://zod.dev/): Stop writing your own rules for validation, use Zod instead.
+
 ## 🧾 Learn More
 
-To learn more about the technologies used, refer to their respective documentations from the link provided in the [features](#-getting-started).
+To learn more about the technologies used, refer to their respective documentations from the link provided above.
 
 ## 🚩 TODO
 
 - [ ] Improve documentation
-- [ ] Add more 
-- [ ] 404 & 500 page
-- [ ] Use http-only cookies
-- [ ] Page headers
 
-## Deploy on Vercel
+## 🚀 Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
