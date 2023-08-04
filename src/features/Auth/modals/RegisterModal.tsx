@@ -1,4 +1,3 @@
-import { useRegisterMutation } from "@/api/auth";
 import Button from "@/components/buttons/Button";
 import ModalLayout from "@/components/modals/ModalLayout";
 import openModal from "@/utils/modals/openModal";
@@ -8,6 +7,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { z } from "zod";
+import { useRegisterMutation } from "../queries";
 
 export interface RegisterModalProps {}
 
@@ -32,7 +32,6 @@ export type RegisterType = z.infer<typeof registerSchema>;
 
 const RegisterModal: MantineModal<RegisterModalProps> = () => {
   const mutation = useRegisterMutation();
-  const router = useRouter();
 
   const form = useForm<RegisterType>({
     validate: zodResolver(registerSchema),

@@ -1,10 +1,10 @@
-import { NextPageWithLayout } from "../_app";
+import { NextPageWithAttributes } from "../_app";
 import useSession from "@/features/Auth/hooks/useSession";
 
-const ProtectedPage: NextPageWithLayout = () => {
+const ProtectedPage: NextPageWithAttributes = () => {
   const session = useSession();
   return (
-    <div className="flex min-h-screen w-full flex-col items-stretch py-24">
+    <div className="flex min-h-screen w-full flex-col items-stretch py-12">
       <h1>This is a protected page</h1>
       <div className="mt-2">
         The current user data (fetched from backend),
@@ -26,4 +26,5 @@ const ProtectedPage: NextPageWithLayout = () => {
 };
 
 ProtectedPage.isPublic = false;
+ProtectedPage.title = "A Protected Page";
 export default ProtectedPage;

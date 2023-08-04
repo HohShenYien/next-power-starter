@@ -1,14 +1,13 @@
-import { NextPageWithLayout } from "@/pages/_app";
+import { NextPageWithAttributes } from "@/pages/_app";
 import getDefaultLayout from "@/layouts/BaseLayout";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useSession from "@/features/Auth/hooks/useSession";
 import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
 import SplashScreen from "@/components/utils/SplashScreen";
 import { notifications } from "@mantine/notifications";
 
 interface AuthGuardProps {
-  Component: NextPageWithLayout;
+  Component: NextPageWithAttributes;
   pageProps: any;
 }
 
@@ -17,21 +16,21 @@ const AuthGuard = ({ Component, pageProps }: AuthGuardProps) => {
   const router = useRouter();
 
   const getLayout = Component.getLayout || getDefaultLayout;
+
   const isAuthenticated =
-    session.status == "authenticated" || session.user != undefined;
-  const canBrowse = Component.isPublic || isAuthenticated;
+    Component.isPublic || session.status === "authenticated";
 
   useEffect(() => {
-    if (!canBrowse && !getCookie("authToken") && session.status !== "loading") {
+    if (!isAuthenticated && session.status !== "loading") {
       notifications.show({
         message: "You are unauthenticated",
         color: "red",
       });
       router.push("/");
     }
-  }, [canBrowse, router, session.status]);
+  }, [Component, session.status]);
 
-  if (session.status === "loading" || !canBrowse) {
+  if (session.status === "loading" && !Component.isPublic) {
     return <SplashScreen />;
   }
 

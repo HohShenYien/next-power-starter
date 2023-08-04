@@ -1,7 +1,6 @@
 import { notifications } from "@mantine/notifications";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -19,9 +18,9 @@ const AxiosProvider = ({ children }: { children: JSX.Element }) => {
     };
 
     const errInterceptor = (error: any) => {
-      if (error?.response?.status === 401 && !error?.response?.data?.message) {
+      if (error?.response?.status === 401 && error?.response?.data?.message) {
         notifications.show({
-          message: "You are unauthenticated, please login",
+          message: error.response.data.message,
           color: "red",
         });
         router.push("/");
@@ -38,10 +37,7 @@ const AxiosProvider = ({ children }: { children: JSX.Element }) => {
     };
 
     const reqInterceptor = apiClient.interceptors.request.use((config) => {
-      const authToken = getCookie("authToken");
-      if (authToken) {
-        config.headers.Authorization = `bearer ${authToken}`;
-      }
+      // TODO: Might want to add in CSRF?
       return config;
     });
 
