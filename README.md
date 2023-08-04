@@ -301,7 +301,7 @@ To learn more about the technologies used, refer to their respective documentati
 
 ## 🚩 TODO
 
-- [ ] Improve documentation
+- [ ] Improve documentation: Was thinking to use [nextra](https://github.com/shuding/nextra-docs-template)
 
 ## 🚀 Deploy on Vercel
 
