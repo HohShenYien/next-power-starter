@@ -4,14 +4,13 @@ type MetaProps = {
   title?: string;
   description?: string;
   image?: string;
-  nested?: boolean;
 };
 
 const titleGenerator = (title?: string) => {
   return title ? `${title} | Next Power Starter` : "Next Power Starter";
 };
 
-const Meta = ({ title, description, image, nested = false }: MetaProps) => {
+const Meta = ({ title, description, image }: MetaProps) => {
   return (
     <Head>
       <title>{titleGenerator(title)}</title>
@@ -29,14 +28,9 @@ const Meta = ({ title, description, image, nested = false }: MetaProps) => {
         </>
       )}
 
-      {/* Don't feel like jamming up the header */}
-      {nested && (
-        <>
-          <meta property="og:type" content="website" />
-          <meta property="twitter:card" content="summary_large_image" />
-          <link rel="icon" href="/favicon.ico" />
-        </>
-      )}
+      <meta property="og:type" content="website" />
+      <meta property="twitter:card" content="summary_large_image" />
+      <link rel="icon" href="/favicon.ico" />
 
       <meta property="og:title" content={titleGenerator(title)} />
       <meta property="twitter:title" content={titleGenerator(title)} />
